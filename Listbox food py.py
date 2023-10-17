@@ -1,31 +1,43 @@
 
 from tkinter import *
+from tkinter import messagebox
 
 def submit():
     items = []
-    for food in listbox.curselection():
-        items.insert(food,listbox.get(food))
+    if not listbox.curselection(): #Nothing select whlie submit
+        messagebox.showerror(title="Error", message="You have not select anyone")
+    else:       
+        for food in listbox.curselection():
+            items.insert(food,listbox.get(food)) #insert selected food to list items
     
-    print("You have ordered : ")
-    for i in items:
-        print(i)
+        print("You have ordered : ")
+        for i in items:
+            print(i)
 
 def add():
-        print("You added :",entry.get())
-        listbox.insert(listbox.size(),entry.get())
-        listbox.config(height=listbox.size())
+    if not entry.get(): #Nothing select whlie adding
+        messagebox.showerror(title="Error", message="You not input anything to add")
+    
+    else:
+        print("You added : ",entry.get())
+        listbox.insert(listbox.size(),entry.get()) #Add input foods into Listbox
+        listbox.config(height=listbox.size()) #Adjust size of listbox
         
 def deletebutton():
     delete_item = []
     
-    for index in reversed(listbox.curselection()):
-        delete_item.insert(index,listbox.get(index)) 
-        listbox.delete(index)
-    listbox.config(height=listbox.size())
-        
-    print("Deleted item: ")
-    for d in delete_item:
-        print(d)
+    if not listbox.curselection():
+        messagebox.showerror(title="Error", message="You have not select anyone to delete")    
+    
+    else:
+        for index in reversed(listbox.curselection()):
+            delete_item.insert(index,listbox.get(index)) #Insert selected foods items to list delete_item
+            listbox.delete(index) #Delete selected foods
+        listbox.config(height=listbox.size()) #Adjust size of listbox
+            
+        print("Deleted item: ")
+        for d in delete_item:
+            print(d)
 
 window = Tk()
 window.title("Food Listbox")
